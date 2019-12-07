@@ -1,11 +1,13 @@
 import Search from './models/Search';
+import { elements } from './views/base';
+import * as searchView from './views/searchView';
 
 const state = {};
 
 const controlSearch = async (e) => {
 	// 1). Get query from the view (yg kita ketik dari search bar).
 	e.preventDefault();
-	const query = 'pizza';
+	const query = searchView.getInput();
 
 	if (query) {
 		// 2). Create new Object
@@ -21,4 +23,4 @@ const controlSearch = async (e) => {
 	}
 };
 
-document.querySelector('.search').addEventListener('submit', controlSearch);
+elements.searchForm.addEventListener('submit', controlSearch);
