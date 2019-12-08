@@ -19,7 +19,10 @@ const controlSearch = async (e) => {
 		await state.Search.getResults();
 
 		// 5). Show results to the UI, render results.
-		console.log(state.Search.result);
+		//console.log(state.Search.result);
+		searchView.clearInput();
+		searchView.clearResults();
+		searchView.renderResults(state.Search.result);
 	}
 };
 
