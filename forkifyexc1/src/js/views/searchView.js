@@ -4,6 +4,15 @@ export const getInput = () => {
 	return elements.searchInput.value;
 };
 
+const limitRecipeTitle = (title, limit = 17) => {
+	if (title.length > limit) {
+		let newTitle = title.split('').splice(0, limit);
+		return `${newTitle.join('')} ...`;
+	} else {
+		return title;
+	}
+};
+
 const renderRecipes = (recipe, i, arr) => {
 	const markup = `
 			<li>
@@ -12,7 +21,7 @@ const renderRecipes = (recipe, i, arr) => {
                         <img src="${recipe.image_url}" alt="${recipe.title}">
                     </figure>
                     <div class="results__data">
-                        <h4 class="results__name">${recipe.title}</h4>
+                        <h4 class="results__name">${limitRecipeTitle(recipe.title)}</h4>
                         <p class="results__author">${recipe.publisher}</p>
                     </div>
                 </a>
