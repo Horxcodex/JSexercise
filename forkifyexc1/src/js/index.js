@@ -23,10 +23,22 @@ const controlSearch = async (e) => {
 
 		// 5). Show results to the UI, render results.
 		//console.log(state.Search.result);
-
 		clearLoader();
 		searchView.renderResults(state.Search.result);
 	}
 };
 
+const controlPagination = (e) => {
+	const ele = e.target.closest('.btn-inline');
+
+	if (ele) {
+		let goToPage = parseInt(ele.dataset.goto, 10);
+		console.log(goToPage);
+		searchView.clearResults();
+		searchView.renderResults(state.Search.result, goToPage);
+	}
+};
+
 elements.searchForm.addEventListener('submit', controlSearch);
+
+elements.searchResPages.addEventListener('click', controlPagination);
