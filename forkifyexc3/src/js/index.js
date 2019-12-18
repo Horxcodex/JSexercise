@@ -28,3 +28,13 @@ elements.searchForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	controlSearch();
 });
+
+document.querySelector('.results__pages').addEventListener('click', (e) => {
+	const btn = e.target.closest('.btn-inline');
+	let page = parseInt(btn.dataset.goto, 10);
+	//console.log(btn);
+	//console.log(data);
+	searchView.clearInput();
+	searchView.clearResults();
+	searchView.renderResults(state.search.result, page);
+});
