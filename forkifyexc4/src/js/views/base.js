@@ -2,7 +2,8 @@ export const elements = {
 	seacrhField: document.querySelector('.search__field'),
 	searchResults: document.querySelector('.results__list'),
 	searchForm: document.querySelector('.search'),
-	searchResultForSpinner: document.querySelector('.results')
+	searchResultForSpinner: document.querySelector('.results'),
+	searchResPage: document.querySelector('.results__pages')
 };
 
 const elementStrings = {
