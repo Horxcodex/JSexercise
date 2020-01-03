@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// creating Object using ES5 function constructor
+/* // creating Object using ES5 function constructor
 export default function Search(query) {
 	this.query = query;
 }
@@ -14,9 +14,9 @@ Search.prototype.getResults = async function() {
 	} catch (error) {
 		alert(error);
 	}
-};
+}; */
 
-/* // using ES6 class
+// using ES6 class
 export default class Search {
 	constructor(query) {
 		this.query = query;
@@ -33,4 +33,3 @@ export default class Search {
 		}
 	}
 }
- */

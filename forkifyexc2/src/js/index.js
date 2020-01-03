@@ -1,4 +1,5 @@
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
@@ -72,3 +73,34 @@ elements.searchResPage.addEventListener('click', (e) => {
 		}
 	}
 });
+
+//------------------RECIPE CONTROLLER----------------//
+
+const controlRecipe = async () => {
+	// 1. Get id from the URL
+	const id = window.location.hash.replace('#', '');
+	console.log(id);
+
+	if (id) {
+		// 2. Prepare UI for changes
+
+		// 3. Create new recipe object
+		//- Create recipe object (remember add it to 'state' object) and pass the 'id'.
+		state.recipe = new Recipe(id);
+
+		// 4. Get recipe data & parse the ingredients
+		//- Call the 'getRecipe' function. Tips: it's on state object and it's await.
+		await state.recipe.getRecipe();
+
+		// 5. Calculte servings and time by calling the method
+		//- call the 'calcTime' and 'calcServing' function. Tips: it's on state object.
+		state.recipe.calcTime();
+		state.recipe.calcServing();
+
+		// 6. Render recipe to UI.
+		//- conslo.log 'state.recipe'.
+		console.log(state.recipe);
+	}
+};
+
+window.addEventListener('hashchange', controlRecipe);
