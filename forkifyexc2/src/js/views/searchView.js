@@ -26,7 +26,7 @@ const limitRecipeTitle = (title, limit = 17) => {
 const renderRecipes = (cur, i, arr) => {
 	let markup = `
         <li>
-            <a class="results__link results__link" href="${cur.recipe_id}">
+            <a class="results__link results__link" href="#${cur.recipe_id}">
                 <figure class="results__fig">
                     <img src="${cur.image_url}" alt="${cur.title}">
                 </figure>

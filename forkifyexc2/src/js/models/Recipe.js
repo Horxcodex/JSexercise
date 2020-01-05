@@ -9,7 +9,7 @@ export default class Recipe {
 		try {
 			const res = await axios(`https://forkify-api.herokuapp.com/api/get?rId=${this.id}`);
 
-			console.log(res);
+			//console.log(res);
 
 			this.title = res.data.recipe.title;
 			this.author = res.data.recipe.publisher;
@@ -29,5 +29,68 @@ export default class Recipe {
 
 	calcServings() {
 		this.servings = 4;
+	}
+
+	parseIngredients() {
+		const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
+		const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+
+		const newIngredient = this.ingredients.map((cur) => {
+			// uniform the unit
+			let ingredient = cur.toLowerCase();
+			unitsLong.forEach((cur, i) => {
+				ingredient = ingredient.replace(cur, unitsShort[i]);
+			});
+
+			// remove pranthesis
+			ingredient = ingredient.replace(/ *\([^)]*\) */g, ' ');
+
+			// parse
+			const arrIng = ingredient.split(' ');
+			const parseNum = parseInt(arrIng[0], 10);
+			//console.log(arrIng);
+
+			let unitIndex = arrIng.findIndex((cur) => {
+				return unitsShort.includes(cur);
+			});
+			// ["1", "package", "of", "active", "dry", "yeast", ""]
+
+			let objIng = {};
+			if (unitIndex > -1) {
+				// theres number and unit
+				let arrCount = arrIng.slice(0, unitIndex);
+				let count;
+				if (arrCount.length === 1) {
+					count = eval(arrIng[0].replace('-', '+'));
+				} else {
+					count = eval(arrCount.join('+'));
+				}
+
+				objIng = {
+					count: count,
+					unit: arrIng[unitIndex],
+					ingredient: arrIng.slice(unitIndex + 1).join(' ')
+				};
+			} else if (parseNum) {
+				// theres number but no unit
+				objIng = {
+					count: parseNum,
+					unit: '',
+					ingredient: arrIng.slice(1).join(' ')
+				};
+			} else if (unitIndex === -1) {
+				// no number & no unit
+				objIng = {
+					count: 1,
+					unit: '',
+					ingredient: ingredient
+				};
+			}
+
+			//return ingredient;
+			return objIng;
+		});
+
+		this.ingredients = newIngredient;
 	}
 }
