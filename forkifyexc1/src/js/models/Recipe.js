@@ -15,7 +15,7 @@ export default class Recipe {
 			this.ingredients = res.data.recipe.ingredients;
 			//console.log(res);
 		} catch (error) {
-			alert(error);
+			alert('Something went wrong');
 		}
 	}
 
@@ -30,10 +30,12 @@ export default class Recipe {
 	}
 
 	parseIngredients() {
+		const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
+		const unitShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+		const units = [...unitShort, 'kg', 'g'];
+
 		const newIngredients = this.ingredients.map((cur, i, arr) => {
 			// 1). uniform units
-			const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
-			const unitShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
 
 			let ingredient = cur.toLowerCase();
 
@@ -48,10 +50,10 @@ export default class Recipe {
 			const arrIng = ingredient.split(' ');
 
 			const unitIndex = arrIng.findIndex((cur) => {
-				return unitShort.includes(cur);
+				return units.includes(cur);
 			});
 
-			let objIng = {};
+			let objIng;
 			if (unitIndex > -1) {
 				// theres a number and a unit
 				const arrCount = arrIng.slice(0, unitIndex);

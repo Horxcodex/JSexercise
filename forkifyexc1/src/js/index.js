@@ -1,7 +1,8 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
-import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
+import { elements, renderLoader, clearLoader } from './views/base';
 
 const state = {};
 
@@ -97,33 +98,37 @@ elements.searchResPages.addEventListener('click', controlPagination);
 
 const controlRecipe = async () => {
 	// 1. Get id from the URL
-	let id = window.location.hash.replace('#', '');
+	const id = window.location.hash.replace('#', '');
 	console.log(id);
 
 	if (id) {
 		// 2. Prepare UI for changes
+		recipeView.clearRecipe();
+		renderLoader(elements.recipe);
 
 		// 3. Create new recipe object
-		state.Recipe = new Recipe(id);
+		state.recipe = new Recipe(id);
 
 		// TESTING
 		//window.r = state.Recipe;
 
 		try {
 			// 4. Get recipe data & parse the ingredients
-			await state.Recipe.getRecipe();
+			await state.recipe.getRecipe();
 			//console.log(state.Recipe.ingredients);
-			state.Recipe.parseIngredients();
+			state.recipe.parseIngredients();
 
 			// 5. Calculte servings and time by calling the
-			state.Recipe.calcTime();
-			state.Recipe.calcServings();
+			state.recipe.calcTime();
+			state.recipe.calcServings();
 
 			// 6. Render recipe to UI.
-			console.log(state.Recipe);
+			clearLoader();
+			recipeView.renderRecipe(state.recipe);
+			//console.log(state.Recipe);
 			//console.log(state.Recipe.ingredients);
-		} catch (error) {
-			alert('error loading recipe!!');
+		} catch (err) {
+			alert('Error Proccesing Recipe!');
 		}
 	}
 };
