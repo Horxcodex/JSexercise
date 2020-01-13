@@ -3,7 +3,8 @@ export const elements = {
 	searchForm: document.querySelector('.search'), // search form
 	searchResList: document.querySelector('.results__list'), // the element where we can display results
 	searchRes: document.querySelector('.results'), // the element where we can display loading spinner
-	searchResPage: document.querySelector('.results__pages')
+	searchResPage: document.querySelector('.results__pages'),
+	recipe: document.querySelector('.recipe')
 };
 
 const elementStrings = {
