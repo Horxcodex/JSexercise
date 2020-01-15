@@ -1,6 +1,7 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
 const state = {};
@@ -20,7 +21,7 @@ const controlSearch = async () => {
 		// 3). Prepare UI for result (add loading spiner, clear prev search results, we will do this on next lecture). Skip this step for now.
 		searchView.clearInput();
 		searchView.clearResults();
-		renderLoader();
+		renderLoader(elements.searchResultForSpinner);
 
 		try {
 			//4). Do the search, search for recipe.
@@ -62,6 +63,8 @@ const controlRecipe = async () => {
 	console.log(id);
 	if (id) {
 		// step 2
+		recipeView.clearRecipe();
+		renderLoader(elements.recipe);
 
 		// step 3
 		state.recipe = new Recipe(id);
@@ -79,7 +82,9 @@ const controlRecipe = async () => {
 			state.recipe.calcServings();
 
 			// step 6
-			console.log(state.recipe);
+			clearLoader();
+			recipeView.renderRecipe(state.recipe);
+			//console.log(state.recipe);
 		} catch (error) {
 			alert('ERROR LOADING RECIPE');
 		}

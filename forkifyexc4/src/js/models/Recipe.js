@@ -35,6 +35,7 @@ export default class Recipe {
 	parseIngredients() {
 		const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
 		const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+		const units = [...unitsShort, 'kg', 'g'];
 
 		const newIngredient = this.ingredients.map((cur) => {
 			let ingredient = cur.toLowerCase();
@@ -53,7 +54,7 @@ export default class Recipe {
 			//["1", "package", "of", "active", "dry", "yeast", ""]
 
 			const unitIndex = arrIng.findIndex((cur) => {
-				return unitsShort.includes(cur);
+				return units.includes(cur);
 			});
 
 			let objIng = {};

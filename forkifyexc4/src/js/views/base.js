@@ -3,7 +3,8 @@ export const elements = {
 	searchResults: document.querySelector('.results__list'),
 	searchForm: document.querySelector('.search'),
 	searchResultForSpinner: document.querySelector('.results'),
-	searchResPage: document.querySelector('.results__pages')
+	searchResPage: document.querySelector('.results__pages'),
+	recipe: document.querySelector('.recipe')
 };
 
 const elementStrings = {
@@ -43,8 +44,20 @@ export const iconError = () => {
     `;
 };
 
-export const renderLoader = () => {
-	elements.searchResultForSpinner.insertAdjacentHTML('afterBegin', loaderIcon());
+/* export const renderLoader = (parent) => {
+	const loader = `
+		<div class="${elementStrings.loader}">
+			<svg>
+				<use href="img/icons.svg#icon-cw"></use>
+			</svg>
+		</div>
+	`;
+
+	parent.insertAdjacentHTML('afterbegin', loader);
+}; */
+
+export const renderLoader = (parent) => {
+	parent.insertAdjacentHTML('afterBegin', loaderIcon());
 };
 
 export const clearLoader = () => {
