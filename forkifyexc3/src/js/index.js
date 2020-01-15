@@ -1,6 +1,6 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
-import { elements } from './views/base';
+import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 
@@ -16,6 +16,8 @@ const controlSearch = async () => {
 	if (query) {
 		// 2). Create new Object ( Search object that we create in 1E is placed here on this step) and add it to state object. Tips: state.search = the object and add 'query' to the argument.
 		state.search = new Search(query);
+		renderLoader(elements.results);
+
 		// 3). Prepare UI for result (add loading spiner, clear prev search results, we will do this on next lecture). Skip this step for now.
 		searchView.clearInput();
 		searchView.clearResults();
@@ -23,6 +25,7 @@ const controlSearch = async () => {
 		try {
 			//4). Do the search, search for recipe.
 			await state.search.getResults();
+			clearLoader();
 
 			//5). Show results to the UI, render results.
 			console.log(state.search.result);
@@ -64,6 +67,7 @@ const controlRecipe = async () => {
 	if (id) {
 		// 2. Prepare UI for changes
 		recipeView.clearRecipe();
+		renderLoader(elements.recipe);
 
 		// 3. Create new recipe object
 		//- Create recipe object (remember add it to 'state' object) and pass the 'id'.
@@ -84,6 +88,7 @@ const controlRecipe = async () => {
 			state.recipe.calcServings();
 
 			// 6. Render recipe to UI.
+			clearLoader();
 			recipeView.renderRecipe(state.recipe);
 			//- conslo.log 'state.recipe'.
 			//console.log(state.recipe);
