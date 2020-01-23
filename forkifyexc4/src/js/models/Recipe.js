@@ -59,11 +59,13 @@ export default class Recipe {
 
 			let objIng = {};
 			const isThereNum = parseInt(arrIng[0], 10);
+
 			if (unitIndex > -1) {
 				// there is a number and unit
 				const countArr = arrIng.slice(0, unitIndex);
 
 				let count;
+
 				if (countArr.length === 1) {
 					count = eval(arrIng[0].replace('-', '+'));
 				} else {

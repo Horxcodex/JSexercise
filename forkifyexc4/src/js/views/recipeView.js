@@ -1,7 +1,26 @@
 import { elements } from './base';
+import { Fraction } from 'fractional';
 
 export const clearRecipe = () => {
 	elements.recipe.innerHTML = '';
+};
+
+const formatCount = (count) => {
+	if (count) {
+		const [int, dec] = count.toString().split('.').map((cur) => parseInt(cur, 10));
+
+		if (!dec) return count;
+
+		if (int === 0) {
+			const fr = new Fraction(count);
+			return `${fr.numerator}/${fr.denominator}`;
+		} else {
+			const fr = new Fraction(count - int);
+			return `${int} ${fr.numerator}/${fr.denominator}`;
+		}
+	}
+
+	return '?';
 };
 
 const createRecipe = (cur) => {
@@ -10,7 +29,7 @@ const createRecipe = (cur) => {
             <svg class="recipe__icon">
                 <use href="img/icons.svg#icon-check"></use>
             </svg>
-            <div class="recipe__count">${cur.count}</div>
+            <div class="recipe__count">${formatCount(cur.count)}</div>
             <div class="recipe__ingredient">
                 <span class="recipe__unit">${cur.unit}</span>
                 ${cur.ingredient}
@@ -100,4 +119,11 @@ export const renderRecipe = (recipe) => {
     `;
 
 	elements.recipe.insertAdjacentHTML('afterbegin', markup);
+};
+
+export const highlightSelected = (id) => {
+	const resArr = Array.from(document.querySelectorAll('.results__link'));
+	resArr.forEach((cur) => cur.classList.remove('results__link--active'));
+
+	document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
 };
