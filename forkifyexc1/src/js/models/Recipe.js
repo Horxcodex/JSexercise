@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { elements } from '../views/base';
 
 export default class Recipe {
 	constructor(id) {
@@ -89,5 +90,25 @@ export default class Recipe {
 		});
 
 		this.ingredients = newIngredients;
+		console.log(this.ingredients);
+	}
+
+	updateServings(type) {
+		// update the Sevings
+		const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1; //dec = decrease
+
+		/* let newServs;
+		if (type === 'dec') {
+			newServs = this.servings - 1;
+		} else {
+			newServs = this.servings + 1;
+		} */
+
+		// update the Ingredient's count number
+		this.ingredients.forEach((cur) => {
+			cur.count = cur.count * (newServings / this.servings);
+		});
+
+		this.servings = newServings;
 	}
 }

@@ -69,13 +69,13 @@ export const renderRecipe = (recipe) => {
                 <span class="recipe__info-text"> servings</span>
 
                 <div class="recipe__info-buttons">
-                <button class="btn-tiny">
+                <button class="btn-tiny btn-decrease">
                     <svg>
                         <use href="img/icons.svg#icon-circle-with-minus"></use>
                     </svg>
                 </button>
 
-                <button class="btn-tiny">
+                <button class="btn-tiny btn-increase">
                     <svg>
                         <use href="img/icons.svg#icon-circle-with-plus"></use>
                     </svg>
@@ -131,6 +131,17 @@ export const highlightSelected = (id) => {
 	resultsArr.forEach((cur) => cur.classList.remove('results__link--active'));
 
 	document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+};
+
+export const updateServingsIngredients = (recipe) => {
+	// Update Servings
+	document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
+
+	// Update Ingredients
+	const countElements = Array.from(document.querySelectorAll('.recipe__count'));
+	countElements.forEach((cur, i) => {
+		cur.textContent = formatCount(recipe.ingredients[i].count);
+	});
 };
 
 /* 
