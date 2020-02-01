@@ -94,4 +94,23 @@ export default class Recipe {
 
 		this.ingredients = newIngredient;
 	}
+
+	updateServings(type) {
+		//const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+
+		let newServs;
+		if (type === 'dec') {
+			newServs = this.servings - 1;
+		} else {
+			newServs = this.servings + 1;
+		}
+
+		this.ingredients.forEach((cur) => {
+			//cur.count = cur.count * (newServings / this.servings);
+			cur.count = cur.count * (newServs / this.servings);
+		});
+
+		//this.servings = newServings;
+		this.servings = newServs;
+	}
 }
