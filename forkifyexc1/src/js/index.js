@@ -3,9 +3,11 @@ import Recipe from './models/Recipe';
 import List from './models/List';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as listView from './views/listView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
 const state = {};
+window.state = state;
 
 //---------------------------SEARCH CONTROLLER-------------------------------------------//
 
@@ -144,6 +146,41 @@ const controlRecipe = async () => {
 
 ['hashchange', 'load'].forEach((e) => window.addEventListener(e, controlRecipe));
 
+//---------------------------LIST CONTROLLER-------------------------------------------//
+const controlList = () => {
+	// Create a new list IF there is not yet
+	if (!state.list) {
+		state.list = new List();
+	}
+	// Add each ingredient to the list and UI
+	state.recipe.ingredients.forEach((cur) => {
+		const item = state.list.addItem(cur.count, cur.unit, cur.ingredient);
+		listView.renderItem(item);
+	});
+
+	console.log(state.list);
+};
+
+// handling delete button
+elements.shopping.addEventListener('click', (e) => {
+	const id = e.target.closest('.shopping__item').dataset.itemid;
+	console.log(id);
+
+	if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+		//delete from state
+		state.list.deleteItem(id);
+
+		// delete from UI
+		listView.deleteItem(id);
+	} else if (e.target.matches('.shopping__count-value')) {
+		// read the data from the interface, and then update it in our state
+		const val = parseFloat(e.target.value, 10);
+		console.log(val);
+
+		state.list.updateCount(id, val);
+	}
+});
+
 // 'handling recipe button clicks'
 elements.recipe.addEventListener('click', (e) => {
 	if (e.target.matches('.btn-decrease, .btn-decrease *')) {
@@ -156,7 +193,10 @@ elements.recipe.addEventListener('click', (e) => {
 		// increase button is clicked
 		state.recipe.updateServings('inc');
 		recipeView.updateServingsIngredients(state.recipe);
+	} else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
+		controlList();
 	}
+
 	console.log(state.recipe);
 });
 

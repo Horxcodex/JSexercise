@@ -29,5 +29,8 @@ export default class List {
 
 	updateCount(id, newCount) {
 		this.items.find((cur) => cur.id === id).count = newCount;
+		/* const el = this.items.find((cur) => cur.id === id);
+		console.log(el);
+		el.count = newCount; */
 	}
 }
