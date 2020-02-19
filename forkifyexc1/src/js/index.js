@@ -155,6 +155,7 @@ const controlList = () => {
 	// Add each ingredient to the list and UI
 	state.recipe.ingredients.forEach((cur) => {
 		const item = state.list.addItem(cur.count, cur.unit, cur.ingredient);
+
 		listView.renderItem(item);
 	});
 

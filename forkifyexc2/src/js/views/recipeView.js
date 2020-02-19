@@ -138,7 +138,7 @@ export const updateServingsIngredients = (recipe) => {
 
 	// Update Ingredients
 	const countElements = Array.from(document.querySelectorAll('.recipe__count'));
-	console.log(countElements);
+	//console.log(countElements);
 	countElements.forEach((cur, i) => {
 		cur.textContent = formatCount(recipe.ingredients[i].count);
 	});

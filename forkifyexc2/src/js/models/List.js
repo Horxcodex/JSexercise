@@ -5,23 +5,18 @@ export default class List {
 		this.items = [];
 	}
 
-	addItem(count, unit, ingredient) {
+	addItem(count, unit, ingredients) {
 		const item = {
 			id: uniqid(),
-			count: count,
-			unit: unit,
-			ingredient: ingredient
+			count,
+			unit,
+			ingredients
 		};
-
 		this.items.push(item);
 		return item;
 	}
 
 	deleteItem(id) {
-		/* const index = this.items.findIndex((cur) => {
-			cur.id === id;
-		}); */
-
 		const index = this.items.findIndex((cur) => cur.id === id);
 
 		this.items.splice(index, 1);
@@ -29,8 +24,9 @@ export default class List {
 
 	updateCount(id, newCount) {
 		this.items.find((cur) => cur.id === id).count = newCount;
-		/* const el = this.items.find((cur) => cur.id === id);
-		console.log(el);
-		el.count = newCount; */
 	}
+
+	/* updateIng(id, newIng) {
+		this.items.find((cur) => cur.id === id).ingredients = newIng;
+	} */
 }
