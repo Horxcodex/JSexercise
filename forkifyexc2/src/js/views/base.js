@@ -4,7 +4,8 @@ export const elements = {
 	searchResList: document.querySelector('.results__list'), // the element where we can display results
 	searchRes: document.querySelector('.results'), // the element where we can display loading spinner
 	searchResPage: document.querySelector('.results__pages'),
-	recipe: document.querySelector('.recipe')
+	recipe: document.querySelector('.recipe'),
+	shopping: document.querySelector('.shopping__list')
 };
 
 const elementStrings = {
