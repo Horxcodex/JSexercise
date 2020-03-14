@@ -4,8 +4,12 @@ import List from './models/List';
 import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as listView from './views/listView';
 
 const state = {};
+
+//testing purposes
+window.state = state;
 
 const controlSearch = async () => {
 	// 1). Get query from the view (yg kita ketik dari search bar).
@@ -108,7 +112,42 @@ window.addEventListener('load', controlRecipe); */
 
 ['hashchange', 'load'].forEach((cur) => window.addEventListener(cur, controlRecipe));
 
+//------------------LIST CONTROLLER----------------//
+
 //handling recipe button clicks
+
+const controlList = () => {
+	// Create a new list IF there is not yet
+	if (!state.List) state.list = new List();
+
+	// Add each ingredient to the list and UI
+	state.recipe.ingredients.forEach((cur) => {
+		const item = state.list.addItem(cur.count, cur.unit, cur.ingredient);
+
+		listView.renderItem(item);
+	});
+
+	console.log(state.list);
+};
+
+elements.shopping.addEventListener('click', (e) => {
+	const id = e.target.closest('.shopping__item').dataset.itemid;
+	console.log(id);
+
+	if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+		// delete from state
+		state.list.deleteItem(id);
+
+		// delete from UI
+		listView.deleteItem(id);
+	} else if (e.target.matches('.shopping__count-value')) {
+		// read the data from the interface, and then update it in our state
+		let val = parseFloat(e.target.value);
+		console.log(val);
+
+		state.list.updateCount(id, val);
+	}
+});
 
 const recipeButtonClicks = (e) => {
 	if (e.target.matches('.btn-decrease, .btn-decrease *')) {
@@ -121,6 +160,8 @@ const recipeButtonClicks = (e) => {
 		// btn increase is clicked
 		state.recipe.updateServings('inc');
 		recipeView.servingUiUpdate(state.recipe);
+	} else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
+		controlList();
 	}
 
 	console.log(state.recipe);
@@ -144,4 +185,5 @@ elements.recipe.addEventListener('click', recipeButtonClicks);
 	console.log(state.recipe);
 }); */
 
+// testing purposes
 window.L = new List();
